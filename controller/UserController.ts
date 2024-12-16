@@ -4,8 +4,7 @@ const JWT = require('jsonwebtoken')
 import {Request, Response} from 'express'
 
 
-
-exports.register = async (req: Request, res: Response) => {
+const register = async (req: Request, res: Response): Promise<any> => {
 try{
 const {email, password, role} = req.body;
 let user = User.findOne({email});
@@ -36,7 +35,7 @@ res.status(201).json({authToken})
 }
 
 
-exports.login = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response): Promise<any> => {
 try{
 const {email, password} = req.body;
 let user = await User.findOne({email});
@@ -57,4 +56,10 @@ res.status(200).json({authToken})
 }catch(error){
 console.log("error", error)
 }
+}
+
+
+export default {
+    register,
+    login
 }

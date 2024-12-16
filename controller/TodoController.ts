@@ -1,8 +1,8 @@
 import {Request, Response} from 'express';
-const Todo = require('../models/TodoSchema')
+import Todo from '../models/TodoSchema'
 
 
-exports.getList = async (req: Request, res: Response) => {
+const getList = async (req: Request, res: Response): Promise<any> => {
 try{
 const todo = await Todo.find();
 res.status(200).send(todo)
@@ -14,7 +14,7 @@ res.status(200).send(todo)
 
 
 
-exports.createList = async (req: Request, res: Response) => {
+const createList = async (req: Request, res: Response): Promise<any> => {
 try{
 const {title, description, tag} = req.body;
 const todo = await Todo.create({
@@ -30,7 +30,7 @@ res.status(200).send(todo)
 }
 
 
-exports.updateList = async (req: Request, res: Response) => {
+const updateList = async (req: Request, res: Response): Promise<any> => {
 try{
 const todoId = req.params.id;
 const {title, description, tag} = req.body;
@@ -46,7 +46,7 @@ res.status(201).send(updatedList)
 }
 
 
-exports.deleteTodo = async (req: Request, res: Response) => {
+const deleteTodo = async (req: Request, res: Response): Promise<any> => {
 try{
 const todoId = req.params.id;
 const deletedTodo = await Todo.findByIdAndDelete(todoId)
@@ -54,4 +54,12 @@ const deletedTodo = await Todo.findByIdAndDelete(todoId)
 console.log("error", error);
 res.status(500).json({message: "Something went wrong"})
 }
+}
+
+
+export default {
+    getList,
+    createList,
+    updateList,
+    deleteTodo
 }
